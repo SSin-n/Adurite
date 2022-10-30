@@ -1,3 +1,6 @@
+-- This version looks identical to the paid version, just without some better games.
+-- Free version is updated and cared about less than paid. (Free Updates every 5 days, Paid Daily)
+
 local Version = "1.2.A";
 local Developer = "Skinny Sin#2182"
 local Date = "10/29/2022"
