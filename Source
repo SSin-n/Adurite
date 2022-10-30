@@ -1,1 +1,405 @@
-loadstring(game:HttpGet("https://pastebin.com/raw/dAUuBP2E", true))()
+local Version = "1.2.A";
+local Developer = "Skinny Sin#2182"
+local Date = "10/29/2022"
+
+local function mb(Text, Caption, Flags)
+    -- Flags: Int, Caption, Text: String
+    messagebox(Text, Caption, Flags)
+end
+mb("Thank you for using Adurite!\n\nCreated by "..Developer.."\nRunning Version: "..Version, "...", "0")
+mb("F1 is to toggle the GUI on/off, hiding or unhiding.", "Quick Note", "0")
+
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local Main = Material.Load({
+	Title = "Adurite",
+	Style = 1,
+	SizeX = 450,
+	SizeY = 500,
+	Theme = "Dark",
+	ColorOverrides = {
+		MainFrame = Color3.fromRGB(25,25,25)
+	}
+})
+
+local UIS = game:GetService("UserInputService")
+UIS.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.X then
+        getgenv().Auto_Rebirth = false;
+        getgenv().Auto_Speed = false;
+        mousemoveabs(129, 350)
+        mouse1click()
+        Main.Banner({
+            Text = "Pressed X, disabled your auto statistics and refreshed your character."
+        })
+    end
+end)
+
+local UIS = game:GetService("UserInputService")
+local TS = game:GetService("TweenService")
+local Adurite = game.CoreGui.Adurite
+
+Adurite.MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+Adurite.MainFrame.AnchorPoint = Vector2.new(0.5,0.5)
+local Toggled = true
+UIS.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.F1 then
+        Toggled = not Toggled;
+        if Toggled == true then
+            TS:Create(Adurite.MainFrame, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 0, 0.8, 0)}):Play()
+        end
+        if Toggled == false then
+            TS:Create(Adurite.MainFrame, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.5,0, 1.2,0)}):Play()
+        end
+    end
+end)
+
+local Home = Main.New({
+    Title = "Home";
+})
+
+local Executor = Home.Button({
+    Text = "Executor: "..identifyexecutor(),
+})
+
+local Developer = Home.Button({
+    Text = "Developer: "..Developer,
+})
+
+local Version = Home.Button({
+    Text = "Version: "..Version
+})
+
+local Updated = Home.Button({
+    Text = "Last Updated: "..Date
+})
+
+local Discord = Home.Button({
+    Text = "Discord: gg/t6ZWwszeAP",
+    Callback = function()
+		setclipboard("https://discord.gg/t6ZWwszeAP")
+	end,
+    Menu = {
+        Info = function(self)
+            Main.Banner({
+                Text = "Copies the Discord's invite to your CBoard."
+            })
+        end
+    }
+})
+
+local Game = Main.New({
+    Title = "Game"
+})
+
+local Rejoin = Game.Button({
+    Text = "Rejoin",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end
+})
+
+-- Games
+
+local Games_Table = {
+    ["A"] = 11372561941
+}
+
+local LocalPlayer = Main.New({
+    Title = "LocalPlayer"
+})
+
+local Movement = LocalPlayer.Button({
+    Text = "Movement"
+})
+
+local WalkSpeed = LocalPlayer.Slider({
+	Text = "WalkSpeed",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end,
+	Min = 1,
+	Max = 500,
+	Def = 16
+})
+
+local HipHeight = LocalPlayer.Slider({
+	Text = "Hip Height",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.HipHeight = Value
+	end,
+	Min = 0,
+	Max = 50,
+	Def = 0
+})
+
+local InvisBlock = LocalPlayer.Label({
+    Text = " "
+})
+local PATH = game:GetService("CoreGui").Adurite.MainFrame.Content.LOCALPLAYER.Label
+PATH.ImageTransparency = 1
+PATH.Size = UDim2.new(1,0,0,2)
+
+local Misc = LocalPlayer.Button({
+    Text = "Miscellaneous"
+})
+
+local Noclip = LocalPlayer.Toggle({
+    Text = "Noclip",
+    Callback = function(Toggle)
+
+    end,
+    Menu = {
+        Info = function(self)
+            Main.Banner({
+                Text = "The ability to phase through solid objects."
+            })
+        end
+    },
+    Enabled = false
+})
+
+if game.PlaceId == Games_Table.A then
+    getgenv().Speed_Shop = false;
+    getgenv().Rebirth_Shop = false;
+    local function WalkToPoint(Position)
+        local Human = game.Players.LocalPlayer.Character.Humanoid;
+        Human:MoveTo(Position)
+    end
+    local Movement = Main.New({
+        Title = "Movement"
+    })
+    local Speed_Shop = Movement.Button({
+        Text = "Speed Multiplier Shop",
+        Callback = function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(522.173462, 65.0904922, -430.263306, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            WalkToPoint(Vector3.new(555.935, 71.7147, -389.663))
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Uses AI pathfinding to move its way to the Speed Multiplier Shop near spawn."
+                })
+            end
+        }
+    })
+    local Rebirth_Shop = Movement.Button({
+        Text = "Rebirths Shop",
+        Callback = function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(522.173462, 65.0904922, -430.263306, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            WalkToPoint(Vector3.new(548.658, 63.5965, -480.72))
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Uses AI pathfinding to move its way to the Rebirths Shop near spawn."
+                })
+            end
+        }
+    })
+    local Farming = Main.New({
+        Title = "Farming"
+    })
+    getgenv().Coin_Farming_1 = false;
+    getgenv().Coin_Farming_2 = false;
+    getgenv().Coin_Farming_3 = false;
+    getgenv().Coin_Farming_4 = false
+    local CoinFarmingMethod = Farming.Button({
+        Text = "Coin Farming Methods"
+    })
+    local Coin_Farming_1 = Farming.Toggle({
+        Text = "Coin Farming, Method I",
+        Callback = function(Toggle)
+            getgenv().Coin_Farming_1 = Toggle
+            if getgenv().Coin_Farming_1 == true then
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+            end
+            coroutine.wrap(function()
+                while task.wait(.01) do
+                    if getgenv().Coin_Farming_1 == true then
+                        for _,v in pairs(workspace.Coins.Coins:GetChildren()) do
+                            WalkToPoint(v.Position)
+                        end
+                    end
+                end
+            end)() 
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Individually walks to each and every coin, until disabled."
+                })
+            end
+        },
+        Enabled = false;
+    })
+    local Coin_Farming_2 = Farming.Toggle({
+        Text = "Coin Farming, Method II",
+        Callback = function(Toggle)
+            getgenv().Coin_Farming_2 = Toggle
+            coroutine.wrap(function()
+                while task.wait(.01) do
+                    if getgenv().Coin_Farming_2 == true then
+                        for _,v in pairs(workspace.Coins.Coins:GetChildren()) do
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                        end
+                    end
+                end
+            end)() 
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Teleports to every individual coin, since no anti-cheat, just uses basic HARD teleport, not tweens."
+                })
+            end
+        },
+        Enabled = false;
+    })
+    local Coin_Farming_3 = Farming.Toggle({
+        Text = "Coin Farming, Method III",
+        Callback = function(Toggle)
+            getgenv().Coin_Farming_3 = Toggle
+            coroutine.wrap(function()
+                while task.wait(.01) do
+                    if getgenv().Coin_Farming_3 == true then
+                        for _,v in pairs(workspace.Coins.Coins:GetChildren()) do
+                            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                        end
+                    end
+                end
+            end)() 
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Teleports all coins to you, at one time, probably the 2nd most efficient coin farming method."
+                })
+            end
+        },
+        Enabled = false;
+    })
+    local Coin_Farming_4 = Farming.Toggle({
+        Text = "Coin Farming, Method IV",
+        Callback = function(Toggle)
+            getgenv().Coin_Farming_4 = Toggle
+            coroutine.wrap(function()
+                if getgenv().Coin_Farming_4 == true then
+                    TS:Create(Adurite.MainFrame, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.8, 0, 0.5, 0)}):Play()
+                    Main.Banner({
+                        Text = "Try not to spam this method, it will spam the teleports, a bug we do NOT plan to fix."
+                    })
+                    local Player = game.Players.LocalPlayer;
+                    local Folder = workspace.Stages;
+                    local Character = Player.Character;
+                    Character.HumanoidRootPart.CFrame = Folder.Stage100.Stud.CFrame + Vector3.new(0, 15, 0)
+                end
+                while task.wait(3) do
+                    if getgenv().Coin_Farming_4 == true then
+                        local Player = game.Players.LocalPlayer;
+                        local Folder = workspace.Stages;
+                        local Character = Player.Character;
+                        Character.HumanoidRootPart.CFrame = Folder.Stage100.Stud.CFrame + Vector3.new(0, 15, 0)
+                    end
+                end
+            end)() 
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Automatically farms the studs."
+                })
+            end
+        },
+        Enabled = false;
+    })
+    local InvisBlock = Farming.Label({
+        Text = " "
+    })
+    local PATH = game:GetService("CoreGui").Adurite.MainFrame.Content.FARMING.Label
+    PATH.ImageTransparency = 1
+    PATH.Size = UDim2.new(1,0,0,2)
+    local AutoStats = Farming.Button({
+        Text = "Auto Statistics"
+    })
+    getgenv().Auto_Rebirth = false;
+    getgenv().Auto_Speed = false;
+    local Auto_Rebirth = Farming.Toggle({
+        Text = "Auto Rebirth",
+        Callback = function(Toggle)
+            getgenv().Auto_Rebirth = Toggle
+            if getgenv().Auto_Rebirth == true then
+                TS:Create(Adurite.MainFrame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.8,0, 0.5,0)}):Play()
+                wait(2)
+                Main.Banner({
+                    Text = "Press 'X' to force-stop the cycle."
+                })
+            end
+            coroutine.wrap(function()
+                while task.wait() do
+                    if getgenv().Auto_Rebirth == true then
+                        repeat
+                            task.wait()
+                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
+                            game:GetService("Players").MrLovelySin.PlayerGui.rebirthsGUI.Activate.Value = true
+                            mousemoveabs(956, 700)
+                            mouse1click()
+                        until getgenv().Auto_Rebirth == false;
+                    end
+                end
+            end)()
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Automatically rebirths when you have enough speed."
+                })
+            end
+        },
+        Enabled = false;
+    })
+    local Auto_Speed = Farming.Toggle({
+        Text = "Auto Speed",
+        Callback = function(Toggle)
+            getgenv().Auto_Speed = Toggle
+            if getgenv().Auto_Speed == true then
+                TS:Create(Adurite.MainFrame, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.8,0, 0.5,0)}):Play()
+                wait(2)
+                Main.Banner({
+                    Text = "Press 'X' to force-stop the cycle."
+                })
+            end
+            coroutine.wrap(function()
+                while task.wait() do
+                    if getgenv().Auto_Speed == true then
+                        repeat
+                            task.wait()
+                            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
+                            game:GetService("Players").MrLovelySin.PlayerGui.shopGUI.Activate.Value = true
+                            mousemoveabs(956, 700)
+                            mouse1click()
+                        until getgenv().Auto_Speed == false;
+                    end
+                end
+            end)()
+        end,
+        Menu = {
+            Info = function(self)
+                Main.Banner({
+                    Text = "Automatically upgrades your speed when you have enough coins."
+                })
+            end
+        },
+        Enabled = false;
+    })
+else
+    local JumpPower = LocalPlayer.Slider({
+        Text = "Jump Power",
+        Callback = function(Value)
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+        end,
+        Min = 1,
+        Max = 500,
+        Def = 50
+    })
+end
